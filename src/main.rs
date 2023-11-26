@@ -30,9 +30,10 @@ fn main() {
     while max_sums.len() > 3{
        max_sums.pop();
     }
-    println!("{:?}",&max_sums);
-    println!("Max sum is : {}", max_sums.pop().unwrap().0 + max_sums.pop().unwrap().0 + max_sums.pop().unwrap().0);
-    
+    println!("{:?}", &max_sums);
+    let sum: u32 = max_sums.into_iter().map(|Reverse(i)| i).sum();
+    println!("Sum of elements: {}", sum);
+
     fn read_lines<P>(filename: P) -> io::Result<io::Lines<io::BufReader<File>>> where P: AsRef<Path>, {
         let file = File::open(filename)?;
         Ok(io::BufReader::new(file).lines())
