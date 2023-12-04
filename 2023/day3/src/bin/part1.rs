@@ -1,6 +1,6 @@
 use std::env;
 use std::fs;
-use std::ops::Range;
+
 
 fn main() {
     let path: &str = &env::args().collect::<Vec<String>>()[1];
@@ -8,10 +8,27 @@ fn main() {
     let binding = content.expect("An input split into lines");
     let lines: Vec<&str> = binding.split("\n").collect::<Vec<&str>>();
 
-    for line in lines{
-        for i in 0..line.len(){
-            print!("{:?}", line.get(i));
+    let mut symbols: Vec<(u32,u32)> = Vec::new();
+    let mut nums: Vec<((u32,u32),char)> = Vec::new();
+    for i in 0..lines.len(){
+        for (j,c) in lines[i].char_indices(){  
+            if !c.is_digit(10){
+                if c == '.'{
+                    continue;
+                }
+                else{
+                    symbols.push((i.try_into().unwrap(),j.try_into().unwrap()));
+                }
+            }
+            else{
+                nums.push(((i.try_into().unwrap(),j.try_into().unwrap()),c));
+            }
+            print!("{:?}", c);
         }
         println!();
     }
+
+    println!("{:?}", symbols);
+    println!("{:?}", nums);
+    // let mut new_nums : Vec
 }
