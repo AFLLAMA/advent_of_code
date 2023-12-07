@@ -23,12 +23,65 @@ fn main() {
             else{
                 nums.push(((i.try_into().unwrap(),j.try_into().unwrap()),c));
             }
-            print!("{:?}", c);
+            //print!("{:?}", c);
         }
-        println!();
+        //println!();
     }
 
     println!("{:?}", symbols);
     println!("{:?}", nums);
-    // let mut new_nums : Vec
+    let mut prev_col: u32 = 0;
+    let mut prev_row: u32 = 0;
+    let mut prev_val = String::from("");
+    let mut to_use: bool = false;
+    let mut result: u32 = 0;
+    for ((row, col), num) in nums{
+        for (r, c) in &symbols{
+            let r_diff = if &row < r{
+                r - row
+            }else{
+                row - r
+            };
+            let c_diff = if &col < c{
+                c - col
+            }else{
+                col - c
+            };
+            // dbg!(r_diff);
+            // dbg!(r);
+            // dbg!(row);
+            // dbg!(c_diff);
+            // dbg!(c);
+            // dbg!(col);
+            // println!();
+            if r_diff <= 1 && c_diff <= 1{
+                to_use = true;
+                println!("{:?}", &to_use);
+                break;
+            }
+        }
+        if ((&prev_col + 1) == col) && (prev_row == row){
+            //println!("row {}, col {}", row,col);
+            prev_val.push(num);
+        }
+        else{ 
+            if to_use{
+                println!("{}", &prev_val);
+                to_use = false;
+                result += prev_val.parse::<u32>().unwrap();
+            }
+
+            prev_val = String::from(num.to_string());
+        }
+
+        prev_col = col;
+        prev_row = row;
+
+    }
+    if to_use{
+        println!("{}", &prev_val);
+        result += prev_val.parse::<u32>().unwrap();
+    }
+    println!("{:?}", result);
+
 }
