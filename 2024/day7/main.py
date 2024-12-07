@@ -45,5 +45,5 @@ if __name__ == '__main__':
     res2 = 0
     for k,v in data_dict.items():
         ways = count_ways2(k,v,v[0])
-        res+=k if ways>0 else 0
+        res2+=k if ways>0 else 0
     print(f'{res2=}')
